@@ -53,9 +53,7 @@ class ImagesListViewController: UIViewController {
         let isLiked = indexParh.row % 2 == 0
         let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         cell.likeButton.setImage(likeImage, for: .normal)
-        
     }
-    
 }
 
 extension ImagesListViewController: UITableViewDelegate {

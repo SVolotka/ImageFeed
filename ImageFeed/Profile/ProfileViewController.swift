@@ -16,7 +16,8 @@ final class ProfileViewController: UIViewController {
     @IBOutlet private var loginNameLabel: UILabel!
     @IBOutlet private var descriptionLabel: UILabel!
     
-    //@IBAction func didTapLogoutButton() {}
+   private let avatarImage = UIImage(named: "avatar")
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,6 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private functions
     private func loadAvatarImageView() {
-        let avatarImage = UIImage(named: "avatar")
         avatarImageView = UIImageView(image: avatarImage)
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(avatarImageView)
@@ -83,6 +83,7 @@ final class ProfileViewController: UIViewController {
         logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor).isActive = true
         logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
     }
+    
     @objc
     private func didTapLogoutButton() {
         
