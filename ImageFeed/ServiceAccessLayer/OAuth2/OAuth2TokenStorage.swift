@@ -3,20 +3,25 @@
 //  ImageFeed
 //
 //  Created by Sergei Volotka on 20.06.2024.
-//
 
 import Foundation
+import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
-    private let userDefaults = UserDefaults.standard
-    private let tokenKey = "OAuth2Token"
     
     var token: String? {
         get {
-            return userDefaults.string(forKey: tokenKey)
+            keychainWrapper.string(forKey: "OAuth2Token")
         }
         set {
-            return userDefaults.setValue(newValue, forKey: tokenKey)
+            guard let token = newValue else { return }
+            keychainWrapper.set(token, forKey: "OAuth2Token")
         }
+    }
+    
+    private let keychainWrapper = KeychainWrapper.standard
+    
+    func removeData() {
+        keychainWrapper.remove(forKey: "OAuth2Token")
     }
 }
