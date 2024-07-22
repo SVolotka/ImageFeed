@@ -21,4 +21,13 @@ final class AlertPresenter {
         alert.addAction(action)
         delegate?.present(alert, animated: true)
     }
+    
+    func showLogoutAlert(title: String?, message: String?,
+                         actionYes: UIAlertAction,
+                         actionNo: UIAlertAction) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        delegate?.present(alert, animated: true)
+    }
 }

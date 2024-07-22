@@ -22,7 +22,9 @@ final class ProfileService {
     private init() {}
     
     // MARK: - Public Methods
-    func fetchProfile(with token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
+    func fetchProfile(with token: String,
+                      completion: @escaping (Result<Profile, Error>) -> Void) {
+        assert(Thread.isMainThread)
         
         if lastToken == token {
             completion(.failure(NetworkError.recurringRequest))
@@ -55,6 +57,10 @@ final class ProfileService {
             self.lastToken = nil
         }
         task.resume()
+    }
+    
+    func removeData(){
+        profile = nil
     }
     
     // MARK: - Private Methods

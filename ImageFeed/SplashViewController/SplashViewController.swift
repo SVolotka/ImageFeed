@@ -17,9 +17,13 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     
     // MARK: - View Life Cycles
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadSplashViewController()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        loadSplashViewController()
         
         if let token = oauth2TokenStorage.token {
             fetchProfile(token)
@@ -51,10 +55,12 @@ final class SplashViewController: UIViewController {
         let imageView = UIImageView(image: logoImage)
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 76).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 73).isActive = true
+        NSLayoutConstraint.activate([
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        imageView.heightAnchor.constraint(equalToConstant: 76),
+        imageView.widthAnchor.constraint(equalToConstant: 73)
+        ])
     }
     
     private func switchToTabBarController() {

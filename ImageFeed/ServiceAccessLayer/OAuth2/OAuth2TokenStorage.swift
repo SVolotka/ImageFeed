@@ -20,4 +20,8 @@ final class OAuth2TokenStorage {
     }
     
     private let keychainWrapper = KeychainWrapper.standard
+    
+    func removeData() {
+        keychainWrapper.remove(forKey: "OAuth2Token")
+    }
 }
