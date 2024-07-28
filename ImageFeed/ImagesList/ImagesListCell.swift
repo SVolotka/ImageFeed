@@ -17,6 +17,7 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet var cellImage: UIImageView!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
+   // likeButton.accessibilityIdentifier = "likeButton"
     
     // MARK: - Public Properties
     static let reuseIdentifier = "ImagesListCell"
@@ -36,7 +37,8 @@ final class ImagesListCell: UITableViewCell {
     func configCell(with photo: Photo) {
         guard let url = URL(string: photo.thumbImageURL) else { return }
         cellImage.kf.indicatorType = .activity
-        (cellImage.kf.indicator?.view as? UIActivityIndicatorView)?.color = .ypBlack
+        let view = cellImage.kf.indicator?.view as? UIActivityIndicatorView
+        view?.color = .ypBlack
         cellImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder_image"))
         dateLabel.text = photo.createdAt
         
@@ -45,10 +47,7 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(_ isLiked: Bool ) {
-        if isLiked {
-            likeButton.setImage(UIImage(named: "like_button_on"), for: .normal)
-        } else {
-            likeButton.setImage(UIImage(named: "like_button_off"), for: .normal)
-        }
+        let imageName = isLiked ? "like_button_on" : "like_button_off"
+        likeButton.setImage(UIImage(named: imageName), for: .normal)
     }
 }

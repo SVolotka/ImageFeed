@@ -17,10 +17,7 @@ final class ImagesListService {
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
-    private let oauth2TokenStorage = OAuth2TokenStorage()
-    
-    private var token = OAuth2TokenStorage().token
-  
+ 
     // MARK: - Initializers
     private init() {}
     

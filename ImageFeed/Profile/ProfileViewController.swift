@@ -7,7 +7,12 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+protocol ProfileViewControllerProtocol: AnyObject {
+    func updateAvatar()
+    func updateProfileDetails(profile: Profile?)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     // MARK: - IBOutlets
     @IBOutlet private var avatarImageView: UIImageView!
@@ -18,10 +23,9 @@ final class ProfileViewController: UIViewController {
     
     
     // MARK: - Private Properties
-    private let profileService = ProfileService.shared
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    lazy var presenter: ProfilePresenterProtocol = ProfilePresenter(view: self)
     private let avatarImage = UIImage(named: "avatarImage")
-    private var profileImageServiceObserver: NSObjectProtocol?
+   // private var profileImageServiceObserver: NSObjectProtocol?
     private let logoutService = ProfileLogoutService.shared
     private let splashViewController = SplashViewController()
     
@@ -30,26 +34,12 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .ypBlack
         loadProfileViewController()
-        createObserver()
-        updateAvatar()
-        
-        if let profile = profileService.profile {
-            updateProfileDetails(profile: profile)
-        }
+        presenter.viewDidLoad()
     }
     
     // MARK: - Private functions
-    private func createObserver() {
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.didChangeNotification,
-            object: nil,
-            queue: .main) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-    }
     
-    private func updateAvatar() {
+    func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
@@ -61,12 +51,12 @@ final class ProfileViewController: UIViewController {
             placeholder: UIImage(named: "placeholder_avatar"))
     }
     
-    private func updateProfileDetails(profile: Profile) {
+    func updateProfileDetails(profile: Profile?) {
         logoutButton.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
         
-        nameLabel.text = profile.name
-        loginNameLabel.text = profile.loginName
-        descriptionLabel.text = profile.bio
+        nameLabel.text = profile?.name
+        loginNameLabel.text = profile?.loginName
+        descriptionLabel.text = profile?.bio
     }
     
     private func loadProfileViewController() {
@@ -145,16 +135,19 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    @objc
-    private func didTapLogoutButton(){
+    private func showLogoutAlert() {
         let alertPresenter = AlertPresenter(delegate: self)
-        let profileLogoutService = ProfileLogoutService.shared
         let actionYes = UIAlertAction(title: "Да", style: .default) { _ in
-            profileLogoutService.logout()
+            self.presenter.logout()
         }
         let actionNo = UIAlertAction(title: "Нет", style: .default)
         alertPresenter.showLogoutAlert(title: "Пока, пока!",
                                        message: "Уверены, что хотите выйти?",
                                        actionYes: actionYes, actionNo: actionNo)
+    }
+    
+    @objc
+    private func didTapLogoutButton() {
+        showLogoutAlert()
     }
 }

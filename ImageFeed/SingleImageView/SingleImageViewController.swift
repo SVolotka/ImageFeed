@@ -28,7 +28,6 @@ final class SingleImageViewController: UIViewController {
         setImage()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-       // scrollView.maximumZoomScale = 3
     }
     
     // MARK: - IB Actions
@@ -87,16 +86,21 @@ final class SingleImageViewController: UIViewController {
             title: "Что-то пошло не так. Попробовать ещё раз?",
             message: nil,
             preferredStyle: .alert)
-        alert.addAction(UIAlertAction(
-            title: "Не надо",
-            style: .default,
-            handler: nil))
-        alert.addAction(UIAlertAction(
-            title: "Повторить",
-            style: .default,
-            handler: {action in
-            self.setImage()
-        }))
+        alert.addAction(
+            .init(
+                title: "Не надо",
+                style: .default,
+                handler: nil
+            )
+        )
+        alert.addAction(
+            .init(title: "Повторить",
+                  style: .default,
+                  handler: { action in
+                      self.setImage()
+                  }
+                 )
+        )
         self.present(alert, animated: true)
     }
 }

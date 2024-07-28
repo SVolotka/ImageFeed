@@ -12,7 +12,6 @@ final class SplashViewController: UIViewController {
     // MARK: - Private Properties
     private let imageView = UIImageView()
     private let oauth2TokenStorage = OAuth2TokenStorage()
-    private let oauth2Service = OAuth2Service.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
@@ -81,8 +80,9 @@ final class SplashViewController: UIViewController {
             
             switch result {
             case .success(let profileResult):
-                switchToTabBarController()
+               // switchToTabBarController()
                 profileImageService.fetchProfileImageURL(username: profileResult.username, authToken: token) { result in }
+                switchToTabBarController()
             case .failure(let error):
                 print("[SplashViewController.fetchProfile]: Ошибка запроса \(error)")
                 break

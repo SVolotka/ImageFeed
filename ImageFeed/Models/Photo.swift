@@ -14,5 +14,10 @@ struct Photo {
     let welcomeDescription: String?
     let thumbImageURL: String
     let largeImageURL: String
+  //  private(set) var isLiked: Bool
     var isLiked: Bool
+    
+//    public mutating func changeLike() {
+//        isLiked = !isLiked
+//    }
 }
