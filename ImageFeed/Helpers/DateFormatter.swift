@@ -15,8 +15,7 @@ class Formatter {
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.dateFormat = "d MMMM yyyy"
+        formatter.setLocalizedDateFormatFromTemplate("d MMMM yyyy")
         return formatter
     }()
     

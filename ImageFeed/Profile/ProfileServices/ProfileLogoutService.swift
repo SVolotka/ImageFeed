@@ -30,8 +30,6 @@ final class ProfileLogoutService {
         profileImageService.removeData()
         profileService.removeData()
         imagesListService.removePhotos()
-        
-        switchToSplashController()
     }
     
     // MARK: - Private Methods
@@ -46,14 +44,4 @@ final class ProfileLogoutService {
             }
         }
     }
-    
-    private func switchToSplashController() {
-        guard let window = UIApplication.shared.windows.first else {
-            assertionFailure("Invalid window configuration")
-            return
-        }
-        let splashViewController = SplashViewController()
-        window.rootViewController = splashViewController
-    }
 }
-

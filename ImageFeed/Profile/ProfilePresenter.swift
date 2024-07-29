@@ -5,7 +5,7 @@
 //  Created by Sergei Volotka on 23.07.2024.
 //
 
-import Foundation
+import UIKit
 
 protocol ProfilePresenterProtocol {
     var view: ProfileViewControllerProtocol? { get set }
@@ -46,5 +46,16 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     func logout() {
         profileLogoutService.logout()
+        switchToSplashController()
+    }
+    
+    // MARK: - Private functions
+    private func switchToSplashController() {
+        guard let window = UIApplication.shared.windows.first else {
+            assertionFailure("Invalid window configuration")
+            return
+        }
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
     }
 }

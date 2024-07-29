@@ -28,6 +28,7 @@ final class AlertPresenter {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(actionYes)
         alert.addAction(actionNo)
+        alert.view.accessibilityIdentifier = "logoutAlert"
         delegate?.present(alert, animated: true)
     }
 }

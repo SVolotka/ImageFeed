@@ -25,9 +25,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     // MARK: - Private Properties
     lazy var presenter: ProfilePresenterProtocol = ProfilePresenter(view: self)
     private let avatarImage = UIImage(named: "avatarImage")
-   // private var profileImageServiceObserver: NSObjectProtocol?
     private let logoutService = ProfileLogoutService.shared
-    private let splashViewController = SplashViewController()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -37,8 +35,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         presenter.viewDidLoad()
     }
     
-    // MARK: - Private functions
-    
+    // MARK: - Public Methods
     func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
@@ -59,6 +56,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         descriptionLabel.text = profile?.bio
     }
     
+    // MARK: - Private functions
     private func loadProfileViewController() {
         loadAvatarImageView()
         loadNameLabel()
@@ -125,6 +123,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         let logoutButtonImage = UIImage(named: "logout_button") ?? UIImage()
         logoutButton = UIButton.systemButton(with: logoutButtonImage, target: self, action: #selector(Self.didTapLogoutButton))
         logoutButton.tintColor = .red
+        logoutButton.accessibilityIdentifier = "logoutButton"
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoutButton)
         logoutButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
